@@ -17,7 +17,7 @@ tasks = [
     }
 ]
 #GET ALL
-@app.route('/todo/api/v1.0/tasks', methods=['GET'])
+@app.route('/list/api/v1.0/tasks', methods=['GET'])
 def get_tasks():
     return jsonify({'tasks': tasks})
 
@@ -26,7 +26,7 @@ def get_test():
     for i in tasks:
         return jsonify({'task': i})
 
-@app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['GET'])
+@app.route('/list/api/v1.0/tasks/<int:task_id>', methods=['GET'])
 def get_task(task_id):
     task = [task for task in tasks if task['id'] == task_id]
     #print task
@@ -34,7 +34,7 @@ def get_task(task_id):
         abort(404)
     return jsonify({'task' : tasks[0]})
 
-@app.route('/todo/api/v1.0/tasks', methods=['POST'])
+@app.route('/list/api/v1.0/tasks', methods=['POST'])
 def create_task():
     if not request.json or not 'title' in request.json:
         abort(400)
@@ -48,7 +48,7 @@ def create_task():
     tasks.append(task)
     return jsonify({'task': task}), 201
 
-@app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['PUT'])
+@app.route('/list/api/v1.0/tasks/<int:task_id>', methods=['PUT'])
 def update_task(task_id):
     task = [task for task in tasks if task['id'] == task_id]
     if len(task) == 0:
@@ -66,7 +66,7 @@ def update_task(task_id):
     task[0]['done'] = request.json.get('done', task[0]['done'])
     return jsonify({'task' : task[0]})
 
-@app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['DELETE'])
+@app.route('/list/api/v1.0/tasks/<int:task_id>', methods=['DELETE'])
 def delete_task(task_id):
     task = [task for task in tasks if task['id'] == task_id]
     if len (task) == 0:
